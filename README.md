@@ -8,7 +8,7 @@ Best optimize way to create node app with express server
 1. Install dependencies via npm:
 
 ```bash
-npm i # (for local setup)
+npm i
 ```
 
 2. Create .env file identical to example.env with valid values
