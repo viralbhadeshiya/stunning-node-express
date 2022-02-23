@@ -1,6 +1,7 @@
 import { checkSchema, validationResult } from 'express-validator';
 import HttpException from '../utils/error.utils.js';
 
+// Common error handling
 export const errorMiddleware = (err, req, res, next) => {
     try {
         // set meta data
@@ -38,6 +39,7 @@ export const errorMiddleware = (err, req, res, next) => {
     }
 };
 
+// Common Auth
 export function validateRequestMiddleware(schema) {
     return async (req, res, next) => {
         await checkSchema(schema).run(req);
