@@ -10,6 +10,7 @@
     "format": "npx prettier --write \"src/**/*.js\"",
     "lint": "npx eslint \"{src,apps,libs,test}/**/*.js\" --fix"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/viralbhadeshiya/stunning-node-express.git"

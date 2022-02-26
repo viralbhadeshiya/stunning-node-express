@@ -3,6 +3,9 @@ import { validateRequestMiddleware } from '../../middleware/error.middleware.js'
 import UserController from './user.controller.js';
 import { signInUserSchema, signUpUserSchema } from './user.model.js';
 
+/**
+ * User route class
+ */
 class UsersRoute {
     path = '/users';
 
