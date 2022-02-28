@@ -1,10 +1,13 @@
+import path from 'path';
+import Config from '../../environment/index.js';
 import HttpException from '../../utils/error.utils.js';
-import { createNewUser, findUserById } from './user.DAL.js';
+import { createNewUser, findUserById, userFindByIdAndUpdate } from './user.DAL.js';
 import { USER_ERROR_CODES } from './user.errors.js';
 import { sendMail } from './user.helper.js';
 import { User } from './user.model.js';
+import { uploadFile } from '../uploads/uploads.helper.js';
 
-// const uploadPath = path.resolve('media/');
+const uploadPath = path.resolve('media/');
 
 class UsersController {
     /**
@@ -87,46 +90,46 @@ class UsersController {
     }
 
     // eslint-disable-next-line consistent-return
-    // async updateProfilePicture(req, res, next) {
-    //     try {
-    //         // Valudate request
-    //         const userId = req.user._id;
-    //         if (!userId) {
-    //             throw new HttpException(
-    //                 500,
-    //                 USER_ERROR_CODES.BAD_REQUEST_FOR_UPLOAD_PROFILE_PHOTO,
-    //                 'BAD_REQUEST_FOR_UPLOAD_PROFILE_PHOTO',
-    //                 null,
-    //             );
-    //         }
+    async updateProfilePicture(req, res, next) {
+        try {
+            // Valudate request
+            const userId = req.user._id;
+            if (!userId) {
+                throw new HttpException(
+                    500,
+                    USER_ERROR_CODES.BAD_REQUEST_FOR_UPLOAD_PROFILE_PHOTO,
+                    'BAD_REQUEST_FOR_UPLOAD_PROFILE_PHOTO',
+                    null,
+                );
+            }
 
-    //         // Upload file to static storage
-    //         let uploadedUrl;
-    //         uploadFile({ uploadPath, fieldName: 'profilePic' })(req, res, err => {
-    //             if (err) {
-    //                 throw new HttpException(
-    //                     500,
-    //                     USER_ERROR_CODES.UPLOAD_PROFILE_IMAGE_FAILED,
-    //                     'UPLOAD_PROFILE_IMAGE_FAILED',
-    //                     err,
-    //                 );
-    //             }
-    //             uploadedUrl = `${Config.BASE_URL}/${uploadPath}${encodeURI(req.file.originalname)}`;
-    //             // update user data in db
-    //             const updateObj = {
-    //                 profilePicture: uploadedUrl,
-    //             };
-    //             userFindByIdAndUpdate(userId, updateObj);
+            // Upload file to static storage
+            let uploadedUrl;
+            uploadFile({ uploadPath, fieldName: 'profilePic' })(req, res, err => {
+                if (err) {
+                    throw new HttpException(
+                        500,
+                        USER_ERROR_CODES.UPLOAD_PROFILE_IMAGE_FAILED,
+                        'UPLOAD_PROFILE_IMAGE_FAILED',
+                        err,
+                    );
+                }
+                uploadedUrl = `${Config.BASE_URL}/${uploadPath}${encodeURI(req.file.originalname)}`;
+                // update user data in db
+                const updateObj = {
+                    profilePicture: uploadedUrl,
+                };
+                userFindByIdAndUpdate(userId, updateObj);
 
-    //             // return HTTP reponse
-    //             return res.status(200).json({
-    //                 url: uploadedUrl,
-    //             });
-    //         });
-    //     } catch (err) {
-    //         return next(err);
-    //     }
-    // }
+                // return HTTP reponse
+                return res.status(200).json({
+                    url: uploadedUrl,
+                });
+            });
+        } catch (err) {
+            return next(err);
+        }
+    }
 }
 
 export default UsersController;

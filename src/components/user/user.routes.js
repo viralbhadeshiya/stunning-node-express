@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { authenticateMiddleware } from '../../middleware/authentication.middleware.js';
 import { validateRequestMiddleware } from '../../middleware/error.middleware.js';
 import UserController from './user.controller.js';
 import { signInUserSchema, signUpUserSchema } from './user.model.js';
@@ -27,12 +28,12 @@ class UsersRoute {
         );
 
         // Auth Router
-        // this.router.get(`${this.path}/me`, authenticateMiddleware.authorize, this.userController.getUsers);
-        // this.router.post(
-        //     `${this.path}/profile`,
-        //     authenticateMiddleware.authorize,
-        //     this.userController.updateProfilePicture,
-        // );
+        this.router.get(`${this.path}/me`, authenticateMiddleware.authorize, this.userController.getUsers);
+        this.router.post(
+            `${this.path}/profile`,
+            authenticateMiddleware.authorize,
+            this.userController.updateProfilePicture,
+        );
     }
 }
 
