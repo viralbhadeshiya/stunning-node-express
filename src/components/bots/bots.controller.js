@@ -54,7 +54,7 @@ class BotsController {
     }
 
     /**
-     * Update paritcular bot with given id
+     * Update particular bot with given id
      * @param {Request} req => Express request
      * @param {Response} res => Express response
      */
