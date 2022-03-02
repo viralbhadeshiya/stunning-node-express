@@ -1,6 +1,13 @@
 # stunning-node-express
 Best optimize way to create node app with express server with JS
 
+## Tech Used
+
+-   [Node JS @ 16.x](https://nodejs.org/en/)
+-   [Mongo DB @ 4.4.x](https://www.mongodb.com/)
+-   [NPM @ 8.5.x](https://www.npmjs.com/)
+-   [Express @ 4.17.x](https://expressjs.com/)
+
 ## Installation & Configuration
 
 - clone the repository into your local machine after cloning the project do follow these steps
